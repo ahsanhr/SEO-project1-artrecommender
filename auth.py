@@ -19,7 +19,6 @@ def register():
         print("PIN must be exactly 4 digits")
         return
 
-    pin = int(pin)
     conn = get_connection()
     cursor = conn.cursor()
 
@@ -54,7 +53,6 @@ def login():
         print("PIN must be exactly 4 digits")
         return
 
-    pin = int(pin)
     conn = get_connection()
     cursor = conn.cursor()
 
