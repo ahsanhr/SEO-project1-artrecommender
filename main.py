@@ -44,7 +44,7 @@ def register():
         """
         )
         conn.commit()
-    except sqlite3.Error as e::
+    except sqlite3.Error as e:
         print("User creation error!")
 
 
