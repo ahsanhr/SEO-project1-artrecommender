@@ -8,7 +8,6 @@ met_url = f'https://collectionapi.metmuseum.org/public/collection/v1/search?geoL
 cleve_url = f'https://openaccess-api.clevelandart.org/api/artworks/?q={country_name}'
 
 works_dict = {}
-ind = 0
 
 chi_response = requests.get(chicago_url)
 chi_works = chi_response.json()['data']
@@ -17,8 +16,9 @@ for w in chi_works:
     art_id = w['id']
     artist = w['artist_display']
     link = f'https://www.artic.edu/artworks/{art_id}/{art_title}'
-    works_dict[art_title] = [artist, link]
-    ind += 1
+    iiif_img_id = w['image_id']
+    image_url = f'https://www.artic.edu/iiif/2/{iiif_img_id}/full/843,/0/default.jpg'
+    works_dict[art_title] = [artist, link, image_url]
 # ok this is how you get chicago links.
 
 met_response = requests.get(met_url)
@@ -33,7 +33,8 @@ for i in range (1, 10):
         artist = "unknown"
     art_title = work_object['title']
     link = f'https://www.metmuseum.org/art/collection/search/{art_id}'
-    works_dict[art_title] = [artist, link]
+    image_url = work_object['primaryImage']
+    works_dict[art_title] = [artist, link, image_url]
 # this is how to get the MET's links
 
 cleve_response = requests.get(cleve_url)
@@ -46,11 +47,13 @@ for w in cleve_works:
         artist = "unknown"
     else:
         artist = creator_data[0]['description']
-    if "France" in culture:
+    if w['images'] == {}:
+        continue
+    image_url = w['images']['web']['url']
+    if country_name in culture:
         link = w['url']
-        works_dict[art_title] = [artist, link]
-    ind += 1
+        works_dict[art_title] = [artist, link, image_url]
 # these are all the cleveland links
 
-worksDF = pd.DataFrame.from_dict(works_dict, orient='index', columns=["artist", "artwork_link"])
+worksDF = pd.DataFrame.from_dict(works_dict, orient='index', columns=["artist", "website_link", "image_url"])
 print(worksDF)
