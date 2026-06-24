@@ -69,17 +69,21 @@ def get_cleveland_works(cleve_url):
         if w['images'] == {}:
             continue
         image_url = w['images']['web']['url']
-        if country_name in culture:
-            link = w['url']
-            works_dict[art_title] = [artist, link, image_url]
+        link = w['url']
+        cleve_works_dict[art_title] = [artist, link, image_url]
 
     return cleve_works_dict
 
-def create_works_dict(urls):
+def create_works_df(urls):
     works_dict = {}
     works_dict.update(get_chicago_works(urls['chi']))
     works_dict.update(get_met_works(urls['met']))
     works_dict.update(get_cleveland_works(urls['cleve']))
     worksDF = pd.DataFrame.from_dict(works_dict, orient='index', columns=["artist", "website_link", "image_url"])
-    return worksDF
+    return worksDF.head(10)
 
+# if __name__ == '__main__':
+#     country_name = get_country()
+#     urls = create_urls(country_name)
+#     finalDF = create_works_dict(urls)
+#     print(finalDF)
