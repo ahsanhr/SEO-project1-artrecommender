@@ -14,6 +14,15 @@ if not imagga_key:
 color_gen_url = "https://api.imagga.com/v2/colors"
 
 '''
+workflow breakdown:
+1. user inputs art they want analyzed via CLI
+2. SQL query pulls all the image_urls from the SELECT query generated, puts it into an array
+3. parse through the array using the pillow module
+4. the images will be turned into a local strip of images
+5. pipe this output into imagga with a POST request
+'''
+
+'''
 response template: response = requests.get(
     'https://api.imagga.com/v2/colors?image_url=https://imagga.com/static/images/colors/sample.jpg',
     auth=('<api-key>', '<api-secret>'),
