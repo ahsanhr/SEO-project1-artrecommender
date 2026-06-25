@@ -22,11 +22,7 @@ def create_tables():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
             artist TEXT NOT NULL,
-            museum TEXT NOT NULL,
-            country TEXT NOT NULL,
-            date_created TEXT,
-            medium_url TEXT,
-            url TEXT
+            link TEXT UNIQUE NOT NULL
         )
         """)
         #saved_artworks table 
