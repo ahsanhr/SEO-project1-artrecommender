@@ -1,0 +1,1 @@
+# Allow user to add and delete artworks to their central gallery
