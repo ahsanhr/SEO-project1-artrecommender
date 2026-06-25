@@ -22,7 +22,8 @@ def create_tables():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
             artist TEXT NOT NULL,
-            link TEXT UNIQUE NOT NULL
+            website_link TEXT UNIQUE NOT NULL
+            image_link TEXT UNIQUE NOT NULL
         )
         """)
         #saved_artworks table 
