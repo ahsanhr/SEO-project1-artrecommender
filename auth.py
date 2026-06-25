@@ -1,5 +1,8 @@
 import sqlite3
 from database import get_connection
+import os 
+from dotenv import load_dotenv
+from google_auth_oauthlib.flow import InstalledAppFlow
 
 
 # user create account
@@ -79,5 +82,44 @@ def login():
     finally:
         conn.close()
 
+# enabling Google OAuth 2.0
 
+# load CLIENT_ID & CLIENT_SECRECT
+load_dotenv()
+
+CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+
+os.environ["OAUTHLIB_RELAX_TOKEN_SCOPE"] = "1"
+
+print(CLIENT_ID)
+print(CLIENT_SECRET)
+
+flow = InstalledAppFlow.from_client_config(
+    {
+        "installed": {
+            "client_id": CLIENT_ID,
+            "client_secret": CLIENT_SECRET,
+            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+            "token_uri": "https://oauth2.googleapis.com/token",
+            "redirect_uris": ["http://localhost"],
+        }
+    },
+    scopes=[
+        "openid",
+        "email",
+        "profile",
+    ],
+)
+
+# currently not working since redirect give us to laptop's localhost
+credentials = flow.run_local_server(port=0)
+# credentials = flow.run_console()
+# cannot redirect to https://faxpanel-spherescholar-4000.codio.io/proxy/8080/
+
+# credentials = flow.run_local_server(
+#     host="0.0.0.0",
+#     port=8080,
+#     open_browser=False
+# )
 
