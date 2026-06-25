@@ -52,3 +52,18 @@ def display_saved_artwork(user_id):
         print("Error displaying saved artworks:", e)
     finally:
         conn.close()
+
+def get_saved_image_links(user_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("""
+        SELECT image_link
+        FROM saved_artworks
+        WHERE user_id = ?
+        """, (user_id,))
+        links = cursor.fetchall()
+        links = [row[0] for row in links]
+        return links
+    except Exception as e:
+        print(f"error! {e}")

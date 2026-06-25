@@ -19,13 +19,14 @@ def browse(user):
         }
         display_dict[ind] = temp
         ind += 1
-    print("""Format:
-NUMBER 
-TITLE 
-ARTIST 
-WEBSITE URL
+    print("""
+                Format:
+                NUMBER 
+                TITLE 
+                ARTIST 
+                WEBSITE URL
 
-""")
+    """)
     for k, v in display_dict.items():
         print(k)
         print(v["title"])
@@ -57,6 +58,12 @@ WEBSITE URL
         else:
             print("not an option!")
             continue
+
+def generate_color_palette(user_id):
+    links = get_saved_image_links(user_id)
+    img_strip = create_image_strip(links)
+    top_five = get_color_palette(img_strip)
+    display_palette(top_five)
 
 # menu/ flow for the app
 def main():
@@ -98,6 +105,15 @@ def main():
                 browse(user)
             elif choice == "2":
                 display_saved_artwork(user[1])
+                select = input("Would you like to generate a color palette of your saved artworks? (Y/N): ")
+                if select == 'Y':
+                    generate_color_palette(user[1])
+                    continue
+                elif select == 'N':
+                    continue
+                else:
+                    print("Sorry, not an option!")
+                    continue
             elif choice == "3":
                 user = None
                 continue
