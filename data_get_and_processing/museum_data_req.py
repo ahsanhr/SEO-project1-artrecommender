@@ -18,7 +18,6 @@ def create_urls(country_name):
 def get_chicago_works(chicago_url):
     chi_works_dict = {}
     chi_response = requests.get(chicago_url)
-    print(chi_response.json())
     chi_works = chi_response.json()['data']
     for i in range(1, 5):
         w = chi_works[i]
@@ -41,8 +40,8 @@ def get_chicago_works(chicago_url):
 def get_met_works(met_url):
     met_works_dict = {}
     met_response = requests.get(met_url)
-    met_works = met_response.json()['objectIDs']
-    for i in range (1, 5):
+    met_works = met_response.json().get('objectIDs') or []
+    for i in range(1, min(5, len(met_works))):
         art_id = met_works[i]
         temp_link = f'https://collectionapi.metmuseum.org/public/collection/v1/objects/{art_id}'
         art_req = requests.get(temp_link)
