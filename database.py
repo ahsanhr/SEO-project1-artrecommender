@@ -16,27 +16,17 @@ def create_tables():
             pin INTEGER NOT NULL
         )
         """)
-        # artwork table
-        cursor.execute(""" 
-        CREATE TABLE IF NOT EXISTS artwork (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT NOT NULL,
-            artist TEXT NOT NULL,
-            website_link TEXT UNIQUE NOT NULL
-            image_link TEXT UNIQUE NOT NULL
-        )
-        """)
         #saved_artworks table 
         cursor.execute(""" 
         CREATE TABLE IF NOT EXISTS saved_artworks (
             user_id INTEGER,
-            artwork_id INTEGER,
-            PRIMARY KEY (user_id, artwork_id),
-            FOREIGN KEY (user_id) REFERENCES users(id),
-            FOREIGN KEY (artwork_id) REFERENCES artwork(id)
+            title TEXT NOT NULL,
+            artist TEXT NOT NULL,
+            website_link TEXT UNIQUE NOT NULL,
+            image_link TEXT UNIQUE NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users(id)
         )
         """)
-    
         conn.commit()
         print("Database created!")
     except sqlite3.Error as e:

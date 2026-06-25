@@ -4,7 +4,7 @@ from gallery import *
 from data_get_and_processing.museum_data_req import *
 from data_get_and_processing.palette_and_material_gen import *
 
-def browse():
+def browse(user):
     country_name = get_country()
     urls = create_urls(country_name)
     works_dict = create_works_dict(urls)
@@ -20,10 +20,12 @@ def browse():
         display_dict[ind] = temp
         ind += 1
     print("""Format:
-        NUMBER 
-        TITLE 
-        ARTIST 
-        WEBSITE URL""")
+NUMBER 
+TITLE 
+ARTIST 
+WEBSITE URL
+
+""")
     for k, v in display_dict.items():
         print(k)
         print(v["title"])
@@ -47,7 +49,7 @@ def browse():
                 continue
             else:
                 print("saving artwork..")
-                save_artwork(user["id"], display_dict[num])
+                save_artwork(user[1], display_dict[int(num)])
                 continue
             
         elif choice == "2":
@@ -93,9 +95,9 @@ def main():
             choice = input("Enter your choice: ")
 
             if choice == "1":
-                browse()
+                browse(user)
             elif choice == "2":
-                display_saved_artwork(user["id"])
+                display_saved_artwork(user[1])
             elif choice == "3":
                 user = None
                 continue
