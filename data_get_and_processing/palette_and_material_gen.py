@@ -1,7 +1,7 @@
 import os
 from requests.auth import HTTPBasicAuth
 from dotenv import load_dotenv
-from museum_data_req import *
+from data_get_and_processing.museum_data_req import *
 from PIL import Image
 from io import BytesIO
 import requests as r

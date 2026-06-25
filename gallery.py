@@ -2,22 +2,6 @@
 import sqlite3
 from database import get_connection
 
-# # results = []
-
-#     results.append({
-#         "title": art_title,
-#         "artist": artist,
-#         "link": link
-#     })
-    
-#     choice = input("Enter artwork numbers (example: 1,3,5): ")
-#     choices = [int(x.strip()) for x in choice.split(",")]
-
-#     for numbers in choices:
-#         artwork = results[number - 1]
-#         save_artwork(user_id, artwork)
-
-# ADD artwork to saved list
 def save_artwork(user_id, artwork):
     conn = get_connection()
     cursor = conn.cursor()
@@ -39,7 +23,8 @@ def save_artwork(user_id, artwork):
         """, (
             artwork["title"],
             artwork["artist"],
-            artwork["link"]
+            artwork["website_link"],
+            artwork["image_link"]
         ))
         artwork_id = cursor.lastrowid
 
@@ -84,8 +69,8 @@ def display_saved_artwork(user_id):
         for i, art in enumerate(artworks, start=1):
             print(f"{i}. {art[0]}")
             print(f"   Artist: {art[1]}")
-            print(f"   Link: {art[2]}")
-            print()
+            print(f"   Website Link: {art[2]}")
+            print(f"   Image Link: {art[3]}")
 
     except: 
         print("Error displaying saved artworks:", e)

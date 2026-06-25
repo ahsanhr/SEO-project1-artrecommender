@@ -1,1 +1,1 @@
-# SEO Project 1: Art Reccomender
+# SEO Project 1: Art Recommender

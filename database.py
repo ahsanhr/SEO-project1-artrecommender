@@ -32,7 +32,6 @@ def create_tables():
             user_id INTEGER,
             artwork_id INTEGER,
             PRIMARY KEY (user_id, artwork_id),
-
             FOREIGN KEY (user_id) REFERENCES users(id),
             FOREIGN KEY (artwork_id) REFERENCES artwork(id)
         )
@@ -44,3 +43,4 @@ def create_tables():
         print("User table creation error!")
     finally:
         conn.close()
+
