@@ -6,7 +6,6 @@ from PIL import Image
 from io import BytesIO
 import requests as r
 from curl_cffi import requests
-from curl_cffi.requests.exceptions import HTTPError, RequestException
 
 load_dotenv()
 
