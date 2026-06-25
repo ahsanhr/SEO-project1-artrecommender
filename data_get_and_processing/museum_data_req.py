@@ -1,5 +1,4 @@
 import requests
-import pandas as pd
 
 def get_country():
     country_name = input("Which country's artwork would you like to be inspired by? ")
@@ -19,6 +18,7 @@ def create_urls(country_name):
 def get_chicago_works(chicago_url):
     chi_works_dict = {}
     chi_response = requests.get(chicago_url)
+    print(chi_response.json())
     chi_works = chi_response.json()['data']
     for i in range(1, 5):
         w = chi_works[i]
@@ -97,8 +97,7 @@ def create_works_dict(urls):
     works_dict.update(get_cleveland_works(urls['cleve']))
     return dict(list(works_dict.items())[:10])
 
-# if __name__ == '__main__':
-#     country_name = get_country()
-#     urls = create_urls(country_name)
-#     finalDF = create_works_df(urls)
-#     print(finalDF)
+if __name__ == '__main__':
+    country_name = get_country()
+    urls = create_urls(country_name)
+    finalDF = create_works_dict(urls)
