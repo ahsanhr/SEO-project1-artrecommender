@@ -1,3 +1,5 @@
+import warnings
+warnings.filterwarnings("ignore", category=FutureWarning)
 from database import create_tables
 from auth import register, login, google_login
 from gallery import *
