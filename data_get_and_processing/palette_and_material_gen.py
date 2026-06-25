@@ -5,7 +5,6 @@ from data_get_and_processing.museum_data_req import *
 from PIL import Image
 from io import BytesIO
 import requests as r
-from curl_cffi import requests
 
 load_dotenv()
 
@@ -36,7 +35,8 @@ def create_image_strip(img_urls):
         if url == "":
             continue
         try:
-            response = requests.get(url, impersonate="chrome120")
+            headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
+            response = r.get(url, headers=headers)
             response.raise_for_status()
             img = Image.open(BytesIO(response.content)).convert("RGB")
             height = 400

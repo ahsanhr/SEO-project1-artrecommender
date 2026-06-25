@@ -8,19 +8,26 @@ def save_artwork(user_id, artwork):
 
     #check if artwork exist before saving
     #save artwork
-    cursor.execute("""
-    INSERT INTO saved_artworks(user_id, title, artist, website_link, image_link)
-        VALUES (?, ?, ?, ?, ?)
-    """, (
-        user_id,
-        artwork["title"],
-        artwork["artist"],
-        artwork["website_link"],
-        artwork["image_link"]
-    ))
-    conn.commit()
-    conn.close()
-    print(f"Saved: {artwork['title']}")
+    try:
+        cursor.execute("""
+        INSERT INTO saved_artworks(user_id, title, artist, website_link, image_link)
+            VALUES (?, ?, ?, ?, ?)
+        """, (
+            user_id,
+            artwork["title"],
+            artwork["artist"],
+            artwork["website_link"],
+            artwork["image_link"]
+        ))
+        conn.commit()
+        print(f"  Saved: {artwork['title']}")
+    except Exception as e:
+        if "UNIQUE constraint failed" in str(e):
+            print(f"  [!] Already saved: {artwork['title']}")
+        else:
+            print(f"  [!] Could not save '{artwork['title']}': {e}")
+    finally:
+        conn.close()
 
 
 # # DELETE artwork from saved list
