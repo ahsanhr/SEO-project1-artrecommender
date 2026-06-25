@@ -59,8 +59,8 @@ def save_artwork(user_id, artwork):
     print(f"Saved: {artwork['title']}")
 
 
-# DELETE artwork from saved list
-def delete_artworks():
+# # DELETE artwork from saved list
+# def delete_artworks():
 
-def display_saved_artwork():
+# def display_saved_artwork():
 
