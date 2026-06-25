@@ -1,9 +1,8 @@
 import sqlite3
 from database import get_connection
-import os
+import os 
 from dotenv import load_dotenv
 from google_auth_oauthlib.flow import InstalledAppFlow
-import requests
 
 
 # user create account
@@ -85,63 +84,44 @@ def login():
 
 # enabling Google OAuth 2.0
 
+# load CLIENT_ID & CLIENT_SECRECT
 load_dotenv()
 
 os.environ["OAUTHLIB_RELAX_TOKEN_SCOPE"] = "1"
 
-SCOPES = [
-    "openid",
-    "https://www.googleapis.com/auth/userinfo.email",
-    "https://www.googleapis.com/auth/userinfo.profile",
-]
+CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 
+os.environ["OAUTHLIB_RELAX_TOKEN_SCOPE"] = "1"
 
-def google_login():
-    client_id = os.getenv("GOOGLE_CLIENT_ID")
-    client_secret = os.getenv("GOOGLE_CLIENT_SECRET")
+print(CLIENT_ID)
+print(CLIENT_SECRET)
 
-    flow = InstalledAppFlow.from_client_config(
-        {
-            "installed": {
-                "client_id": client_id,
-                "client_secret": client_secret,
-                "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-                "token_uri": "https://oauth2.googleapis.com/token",
-                "redirect_uris": ["http://localhost"],
-            }
-        },
-        scopes=SCOPES,
-    )
+flow = InstalledAppFlow.from_client_config(
+    {
+        "installed": {
+            "client_id": CLIENT_ID,
+            "client_secret": CLIENT_SECRET,
+            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+            "token_uri": "https://oauth2.googleapis.com/token",
+            "redirect_uris": ["http://localhost"],
+        }
+    },
+    scopes=[
+        "openid",
+        "email",
+        "profile",
+    ],
+)
 
-    credentials = flow.run_local_server(port=0)
+# currently not working since redirect give us to laptop's localhost
+credentials = flow.run_local_server(port=0)
+# credentials = flow.run_console()
+# cannot redirect to https://faxpanel-spherescholar-4000.codio.io/proxy/8080/
 
-    response = requests.get(
-        "https://www.googleapis.com/oauth2/v3/userinfo",
-        headers={"Authorization": f"Bearer {credentials.token}"},
-    )
-    user_info = response.json()
-
-    google_id = user_info.get("sub")
-    email = user_info.get("email")
-    name = user_info.get("name")
-
-    conn = get_connection()
-    cursor = conn.cursor()
-    try:
-        cursor.execute(
-            "INSERT OR IGNORE INTO users (google_id, email, name) VALUES (?, ?, ?)",
-            (google_id, email, name),
-        )
-        conn.commit()
-        cursor.execute(
-            "SELECT id, name FROM users WHERE google_id = ?", (google_id,)
-        )
-        user = cursor.fetchone()
-        print(f"Welcome, {user[1]}!")
-        return user
-    except sqlite3.Error as e:
-        print(f"Login error: {e}")
-        return None
-    finally:
-        conn.close()
+# credentials = flow.run_local_server(
+#     host="0.0.0.0",
+#     port=8080,
+#     open_browser=False
+# )
 

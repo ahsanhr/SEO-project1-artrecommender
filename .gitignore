@@ -4,3 +4,8 @@ __pycache__/
 museum.db
 .env
 .pytest_cache
+
+# Virtual environment
+.venv/
+venv/
+env/

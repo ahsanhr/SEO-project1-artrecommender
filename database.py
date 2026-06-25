@@ -9,14 +9,11 @@ def create_tables():
     cursor = conn.cursor()
     try:
         # user table
-        cursor.execute("""
+        cursor.execute(""" 
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT UNIQUE,
-            pin TEXT,
-            google_id TEXT UNIQUE,
-            email TEXT UNIQUE,
-            name TEXT
+            username TEXT UNIQUE NOT NULL,
+            pin INTEGER NOT NULL
         )
         """)
         #saved_artworks table 
