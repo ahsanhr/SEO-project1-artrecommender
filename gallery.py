@@ -68,7 +68,7 @@ def display_saved_artwork():
 
     try:
         cursor,execute("""
-        SELECT artwork.link, artwork.link, artwork.link
+        SELECT artwork.title, artwork.artist, artwork.link
             JOIN saved_artworks
                 ON artwork.id = saved_artworks.artwork_id
             WHERE saved_artworks.user_id = ?
@@ -81,9 +81,9 @@ def display_saved_artwork():
             return
 
         for i, art in enumerate(artworks, start=1):
-            print(f"{i}. {artwork[0]}")
-            print(f"   Artist: {artwork[1]}")
-            print(f"   Link: {artwork[2]}")
+            print(f"{i}. {art[0]}")
+            print(f"   Artist: {art[1]}")
+            print(f"   Link: {art[2]}")
             print()
 
     except: 
