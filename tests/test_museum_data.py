@@ -20,7 +20,7 @@ class TestMuseumData(unittest.TestCase):
 
 
     @patch('data_get_and_processing.museum_data_req.create_works_df')
-    def test_create_works_df(self, mock_fetch):
+    def test_create_works_dict(self, mock_fetch):
         mock_dict = {
             "work_{i}": [f"Artist {i}", "http://link.com", "http://image.com"] 
             for i in range(15)
@@ -28,8 +28,8 @@ class TestMuseumData(unittest.TestCase):
         mock_fetch.return_value = mock_dict
         country_name = "France"
         test_urls = create_urls(country_name)
-        result_df = create_works_df(test_urls)
-        self.assertEqual(len(result_df), 10)
+        result_dict = create_works_dict(test_urls)
+        self.assertEqual(len(result_dict), 10)
 
     
 if __name__ == '__main__':

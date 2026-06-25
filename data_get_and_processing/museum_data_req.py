@@ -2,7 +2,7 @@ import requests
 import pandas as pd
 
 def get_country():
-    country_name = input("enter a country: ")
+    country_name = input("Which country's artwork would you like to be inspired by? ")
     return country_name
 
 def create_urls(country_name):
@@ -28,7 +28,12 @@ def get_chicago_works(chicago_url):
         link = f'https://www.artic.edu/artworks/{art_id}/{art_title}'
         iiif_img_id = w['image_id']
         image_url = f'https://www.artic.edu/iiif/2/{iiif_img_id}/full/843,/0/default.jpg'
-        chi_works_dict[art_title] = [artist, link, image_url]
+        temp = {
+            "artist": artist,
+            "website_link": link,
+            "image_link": image_url
+        }
+        chi_works_dict[art_title] = temp
 
     return chi_works_dict
 
@@ -48,7 +53,13 @@ def get_met_works(met_url):
         art_title = work_object['title']
         link = f'https://www.metmuseum.org/art/collection/search/{art_id}'
         image_url = work_object['primaryImage']
-        met_works_dict[art_title] = [artist, link, image_url]
+        temp = {
+            "artist": artist,
+            "website_link": link,
+            "image_link": image_url
+        }
+
+        met_works_dict[art_title] = temp
     
     return met_works_dict
 
@@ -70,17 +81,21 @@ def get_cleveland_works(cleve_url):
             continue
         image_url = w['images']['web']['url']
         link = w['url']
-        cleve_works_dict[art_title] = [artist, link, image_url]
+        temp = {
+            "artist": artist,
+            "website_link": link,
+            "image_link": image_url
+        }
+        cleve_works_dict[art_title] = temp
 
     return cleve_works_dict
 
-def create_works_df(urls):
+def create_works_dict(urls):
     works_dict = {}
     works_dict.update(get_chicago_works(urls['chi']))
     works_dict.update(get_met_works(urls['met']))
     works_dict.update(get_cleveland_works(urls['cleve']))
-    worksDF = pd.DataFrame.from_dict(works_dict, orient='index', columns=["artist", "website_link", "image_url"])
-    return worksDF.head(10)
+    return dict(list(works_dict.items())[:10])
 
 # if __name__ == '__main__':
 #     country_name = get_country()
