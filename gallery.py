@@ -62,5 +62,32 @@ def save_artwork(user_id, artwork):
 # # DELETE artwork from saved list
 # def delete_artworks():
 
-# def display_saved_artwork():
+def display_saved_artwork():
+    conn = get_connection()
+    cursor = conn.cursor()
 
+    try:
+        cursor,execute("""
+        SELECT artwork.link, artwork.link, artwork.link
+            JOIN saved_artworks
+                ON artwork.id = saved_artworks.artwork_id
+            WHERE saved_artworks.user_id = ?
+        """, (user_id,))
+    
+        artworks = cursor.fetchall()
+
+        if not artworks:
+            print("You have no saved artworks!")
+            return
+
+        for i, art in enumerate(artworks, start=1):
+            print(f"{i}. {artwork[0]}")
+            print(f"   Artist: {artwork[1]}")
+            print(f"   Link: {artwork[2]}")
+            print()
+
+    except: 
+        print("Error displaying saved artworks:", e)
+
+    finally:
+        conn.close()
