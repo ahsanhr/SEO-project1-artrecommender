@@ -90,6 +90,8 @@ load_dotenv()
 CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 
+os.environ["OAUTHLIB_RELAX_TOKEN_SCOPE"] = "1"
+
 print(CLIENT_ID)
 print(CLIENT_SECRET)
 
