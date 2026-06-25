@@ -5,3 +5,4 @@ to install all dependencies, use:
 
 to load all dependencies into file
     pip freeze > requirements.txt
+# SEO Project 1: Art Recommender
