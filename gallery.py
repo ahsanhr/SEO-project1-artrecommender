@@ -62,13 +62,14 @@ def save_artwork(user_id, artwork):
 # # DELETE artwork from saved list
 # def delete_artworks():
 
-def display_saved_artwork():
+def display_saved_artwork(user_id):
     conn = get_connection()
     cursor = conn.cursor()
 
     try:
-        cursor,execute("""
+        cursor.execute("""
         SELECT artwork.title, artwork.artist, artwork.link
+        FROM artwork
             JOIN saved_artworks
                 ON artwork.id = saved_artworks.artwork_id
             WHERE saved_artworks.user_id = ?
