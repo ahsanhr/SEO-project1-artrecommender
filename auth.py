@@ -111,13 +111,13 @@ flow = InstalledAppFlow.from_client_config(
 )
 
 # currently not working since redirect give us to laptop's localhost
-# credentials = flow.run_local_server(port=0)
+credentials = flow.run_local_server(port=0)
 # credentials = flow.run_console()
 # cannot redirect to https://faxpanel-spherescholar-4000.codio.io/proxy/8080/
 
-credentials = flow.run_local_server(
-    host="0.0.0.0",
-    port=8080,
-    open_browser=False
-)
+# credentials = flow.run_local_server(
+#     host="0.0.0.0",
+#     port=8080,
+#     open_browser=False
+# )
 
