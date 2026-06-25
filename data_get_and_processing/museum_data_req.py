@@ -82,8 +82,8 @@ def create_works_df(urls):
     worksDF = pd.DataFrame.from_dict(works_dict, orient='index', columns=["artist", "website_link", "image_url"])
     return worksDF.head(10)
 
-if __name__ == '__main__':
-    country_name = get_country()
-    urls = create_urls(country_name)
-    finalDF = create_works_df(urls)
-    print(finalDF)
+# if __name__ == '__main__':
+#     country_name = get_country()
+#     urls = create_urls(country_name)
+#     finalDF = create_works_df(urls)
+#     print(finalDF)
